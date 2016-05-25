@@ -28,21 +28,6 @@ export const testUrl = (link) => {
 	});
 };
 
-/*export const makeTemplate = (link) => {
-	return new Promise((resolve,reject) => {
-		child_process.exec(`wget -r ${link} -P ./Templates/`,(err,stdout,stderr) => {
-			if(err){
-				reject(err);
-			}
-			else{
-				console.log('Trying wget');
-				console.log(stderr);
-				resolve(stdout);
-			}
-		})
-	});
-};*/
-
 export const makeTemplate = (link) => {
 	return new Promise((resolve,reject) => {
 		var cwd = process.cwd();
