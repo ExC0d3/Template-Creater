@@ -46,7 +46,7 @@ export const testUrl = (link) => {
 export const makeTemplate = (link) => {
 	return new Promise((resolve,reject) => {
 		var cwd = process.cwd();
-		var wget = child_process.spawn('wget',['-r',link,'-P',cwd+'/Templates']);
+		var wget = child_process.spawn('wget',['-r',link,'-P',cwd+'/Templates','-nv']);
 		
 		var bar = new progressBar('downloading [:bar] :percent :etas',{
 			total:20,
@@ -56,12 +56,11 @@ export const makeTemplate = (link) => {
 		});
 
 		wget.stdout.on('data',(data) => {
-			console.log(data);
-			//bar.tick()
+			console.log('Wget Data',data);
 		});
 
 		wget.stderr.on('data', (data) => {
-			console.log('Wget err',data.toString());
+			console.log(data.toString());
 		});
 
 		wget.on('close',(code)=> {
