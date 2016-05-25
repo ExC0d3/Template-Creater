@@ -1,16 +1,18 @@
 import {
 	getUrl,
-	testUrl
+	testUrl,
+	makeTemplate,
 } from './functions';
 
 getUrl()
 	.then( url => testUrl(url))
-	.then( result => {
+	.then( url => makeTemplate(url))
+	.then( result =>  {
 		console.log(result);
 		process.exit(0);
 	})
 	.catch( (err) => {
 		console.log('Promise rejected');
-		console.error(err);
+		console.log(err);
 		process.exit(1);
 	});

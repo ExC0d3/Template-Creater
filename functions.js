@@ -1,8 +1,8 @@
 import rl from './input';
 
-var child_process = require('child_process');
-
-const vu = require('valid-url');
+var child_process 	= require('child_process');
+const vu 			= require('valid-url');
+var progressBar 	= require('progress');
 
 export const getUrl = () => {
 	return new Promise((resolve,reject) => {
@@ -20,10 +20,57 @@ export const getUrl = () => {
 
 export const testUrl = (link) => {
 	return new Promise((resolve,reject) => {
-		if(vu.isHttpUri(link)){
+		if(vu.isWebUri(link)){
 			resolve(link);
 		} else {
 			reject(link);
 		}
 	});
+};
+
+/*export const makeTemplate = (link) => {
+	return new Promise((resolve,reject) => {
+		child_process.exec(`wget -r ${link} -P ./Templates/`,(err,stdout,stderr) => {
+			if(err){
+				reject(err);
+			}
+			else{
+				console.log('Trying wget');
+				console.log(stderr);
+				resolve(stdout);
+			}
+		})
+	});
+};*/
+
+export const makeTemplate = (link) => {
+	return new Promise((resolve,reject) => {
+		var cwd = process.cwd();
+		var wget = child_process.spawn('wget',['-r',link,'-P',cwd+'/Templates']);
+		
+		var bar = new progressBar('downloading [:bar] :percent :etas',{
+			total:20,
+			complete:"*",
+			incomplete:"^",
+			width:20
+		});
+
+		wget.stdout.on('data',(data) => {
+			console.log(data);
+			//bar.tick()
+		});
+
+		wget.stderr.on('data', (data) => {
+			console.log('Wget err',data.toString());
+		});
+
+		wget.on('close',(code)=> {
+			console.log('Child process exited with',code);
+			resolve(code);
+		});
+
+		wget.on('error', (err)=> {
+			reject(err);
+		});
+});
 }
