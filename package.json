@@ -4,7 +4,7 @@
   "description": "Creates the folder structure HTML/CSS/JS and replaces images with placeholders ",
   "main": "index.js",
   "scripts": {
-    "test": "npm start"
+    "start":"node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +15,9 @@
   "bugs": {
     "url": "https://github.com/ExC0d3/Template-Creater/issues"
   },
-  "homepage": "https://github.com/ExC0d3/Template-Creater#readme"
+  "homepage": "https://github.com/ExC0d3/Template-Creater#readme",
+  "dependencies": {
+    "babel-core": "^6.9.0",
+    "babel-preset-es2015": "^6.9.0"
+  }
 }
