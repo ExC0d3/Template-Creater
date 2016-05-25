@@ -1,0 +1,19 @@
+{
+  "name": "template_create",
+  "version": "1.0.0",
+  "description": "Creates the folder structure HTML/CSS/JS and replaces images with placeholders ",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://git@github.com/ExC0d3/Template-Creater.git"
+  },
+  "author": "Abhinav Sharma",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ExC0d3/Template-Creater/issues"
+  },
+  "homepage": "https://github.com/ExC0d3/Template-Creater#readme"
+}
