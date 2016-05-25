@@ -1,8 +1,12 @@
 import rl from './input';
 
+var child_process = require('child_process');
+
+const vu = require('valid-url');
+
 export const getUrl = () => {
 	return new Promise((resolve,reject) => {
-		rl.question('Enter the url:- ', (url) =>{
+		rl.question('Enter the root url:- ', (url) =>{
 			if(url.length > 0){
 				rl.close();
 				resolve(url);
@@ -14,9 +18,12 @@ export const getUrl = () => {
 	});
 };
 
-export const testUrl = (url) => {
+export const testUrl = (link) => {
 	return new Promise((resolve,reject) => {
-
-
+		if(vu.isHttpUri(link)){
+			resolve(link);
+		} else {
+			reject(link);
+		}
 	});
 }
