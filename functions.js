@@ -3,6 +3,7 @@ import rl from './input';
 var child_process 	= require('child_process');
 const vu 			= require('valid-url');
 var progressBar 	= require('progress');
+const fs 			= require('fs');
 
 export const getUrl = () => {
 	return new Promise((resolve,reject) => {
@@ -50,11 +51,25 @@ export const makeTemplate = (link) => {
 
 		wget.on('close',(code)=> {
 			console.log('Child process exited with',code);
-			resolve(code);
+			resolve(link);
 		});
 
 		wget.on('error', (err)=> {
 			reject(err);
 		});
 });
+};
+
+export const listContents = (directory) => {
+	console.log(directory);
+	return new Promise((resolve,reject)=> {
+		fs.readdir(directory,(err,result)=> {
+			if(err){
+				reject(err);
+			}
+			else{
+				resolve(result);
+			}
+		});
+	});
 }
