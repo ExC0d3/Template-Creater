@@ -31,7 +31,7 @@ export const testUrl = (link) => {
 
 export const makeTemplate = (link) => {
 	return new Promise((resolve,reject) => {
-		var cwd = process.cwd();
+		var cwd  = process.cwd();
 		var wget = child_process.spawn('wget',['-r',link,'-P',cwd+'/Templates','-nv']);
 		
 		var bar = new progressBar('downloading [:bar] :percent :etas',{
@@ -59,6 +59,7 @@ export const makeTemplate = (link) => {
 		});
 });
 };
+
 
 export const listContents = (directory) => {
 	console.log(directory);
