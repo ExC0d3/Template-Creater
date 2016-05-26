@@ -32,10 +32,10 @@ export const testUrl = (link) => {
 export const makeTemplate = (link) => {
 	return new Promise((resolve,reject) => {
 		var cwd  = process.cwd();
-		var wget = child_process.spawn('wget',['-r',link,'-P',cwd+'/Templates','-nv']);
+		var wget = child_process.spawn('wget',['--mirror','-p','--convert-links','-P',cwd+'/Templates',link]);
 		
 		var bar = new progressBar('downloading [:bar] :percent :etas',{
-			total:20,
+			total:100,
 			complete:"*",
 			incomplete:"^",
 			width:20
@@ -46,7 +46,8 @@ export const makeTemplate = (link) => {
 		});
 
 		wget.stderr.on('data', (data) => {
-			console.log(data.toString());
+			//console.log(data.toString());
+			bar.tick(data.length/100);
 		});
 
 		wget.on('close',(code)=> {
@@ -57,7 +58,7 @@ export const makeTemplate = (link) => {
 		wget.on('error', (err)=> {
 			reject(err);
 		});
-});
+	});
 };
 
 
@@ -73,4 +74,4 @@ export const listContents = (directory) => {
 			}
 		});
 	});
-}
+};
