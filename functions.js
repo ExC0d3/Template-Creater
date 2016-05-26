@@ -2,7 +2,7 @@ import rl from './input';
 
 var child_process 	= require('child_process');
 const vu 			= require('valid-url');
-var progressBar 	= require('progress');
+var progress 		= require('progressbar').create().step('Downloading Mirror Website');
 const fs 			= require('fs');
 
 export const getUrl = () => {
@@ -34,23 +34,20 @@ export const makeTemplate = (link) => {
 		var cwd  = process.cwd();
 		var wget = child_process.spawn('wget',['--mirror','-p','--convert-links','-P',cwd+'/Templates',link]);
 		
-		var bar = new progressBar('downloading [:bar] :percent :etas',{
-			total:100,
-			complete:"*",
-			incomplete:"^",
-			width:20
-		});
+		
+		progress.setTotal(100);
 
 		wget.stdout.on('data',(data) => {
 			console.log('Wget Data',data);
 		});
 
 		wget.stderr.on('data', (data) => {
-			//console.log(data.toString());
-			bar.tick(data.length/100);
+			progress.addTick();
+			progress.setTick(data.length);
 		});
 
 		wget.on('close',(code)=> {
+			progress.finish();
 			console.log('Child process exited with',code);
 			resolve(link);
 		});
