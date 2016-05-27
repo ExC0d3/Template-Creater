@@ -20,19 +20,19 @@ const check = (value)=>{
 
 
 getUrl()
-	.then( url => testUrl(url))
-	.then( url => makeTemplate(url))
-	.then( result =>  {
+	.then( url 		=> testUrl(url))
+	.then( url 		=> makeTemplate(url))
+	.then( result 	=>  {
 		host = url.parse(result).hostname;
 		return listContents(`${cwd}/Templates/${host}`);
 	})
-	.then( data => findImages(`${__dirname}/Templates/${host}`))
-	.then( data => data.split('\n'))
-	.then(data => {
+	.then( data 	=> findImages(`${__dirname}/Templates/${host}`))
+	.then( data 	=> data.split('\n'))
+	.then( data 	=> {
 		console.log(data);
 		process.exit(0);
 	})
-	.catch( (err) => {
+	.catch( (err) 	=> {
 		console.log('Promise rejected');
 		console.log(err);
 		process.exit(1);
