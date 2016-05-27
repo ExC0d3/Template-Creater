@@ -87,7 +87,7 @@ export const findImages = (directory,format) => {
 			count += 1;
 		}
 
-	child_process.exec(`find ${newPath} -name \"*.jpg\" -or -name \"*.png\" -or -name \"*.svg\"`,(err,stdout,stderr) => {
+	child_process.exec(`find ${newPath} -name \"*.jpg\" -or -name \"*.png\"`,(err,stdout,stderr) => {
 		if(err){
 			reject(err);
 		}	else {
@@ -102,8 +102,9 @@ export const mkdir = (path,name) => {
 	return new Promise((resolve,reject) => {
 		const finalPath = path+'/'+name;
 		fs.mkdir(finalPath, (err,result) => {
-			if(err)
+			if(err.code !== 'EEXIST')
 				reject(err);
+			console.log('directory created successfully');
 			resolve(result);
 		});
 	});
