@@ -26,8 +26,9 @@ getUrl()
 		host = url.parse(result).hostname;
 		return listContents(`${cwd}/Templates/${host}`);
 	})
-	.then( data => filter(data, check))
-	.then( data => {
+	.then( data => findImages(`${__dirname}/Templates/${host}`))
+	.then( data => data.split('\n'))
+	.then(data => {
 		console.log(data);
 		process.exit(0);
 	})

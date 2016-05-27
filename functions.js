@@ -72,6 +72,7 @@ export const listContents = (directory) => {
 	});
 };
 
+//finds all images i.e. files with extension jpg, png and svg
 export const findImages = (directory,format) => {
 	return new Promise((resolve,reject)=> {
 
@@ -82,14 +83,12 @@ export const findImages = (directory,format) => {
 			newPath += '\\ '+array[count];
 			count += 1;
 		}
-		console.log('New Path:', newPath );
 
-
-	child_process.exec(`find ${newPath} -name \"*.${format}\"`,(err,stdout,stderr) => {
+	child_process.exec(`find ${newPath} -name \"*.jpg\" -or -name \"*.png\" -or -name \"*.svg\"`,(err,stdout,stderr) => {
 		if(err){
 			reject(err);
 		}	else {
-			console.log('Error from find command:',stderr);
+			//console.log('Error from find command:',stderr);
 			resolve(stdout);
 		}
 	});
