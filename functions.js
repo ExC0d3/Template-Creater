@@ -4,6 +4,7 @@ var child_process 	= require('child_process');
 const vu 			= require('valid-url');
 const fs 			= require('fs');
 
+//take url link as input
 export const getUrl = () => {
 	return new Promise((resolve,reject) => {
 		rl.question('Enter the root url:- ', (url) =>{
@@ -18,6 +19,7 @@ export const getUrl = () => {
 	});
 };
 
+//check validity of a url - accepts of http or https
 export const testUrl = (link) => {
 	return new Promise((resolve,reject) => {
 		if(vu.isWebUri(link)){
@@ -28,6 +30,7 @@ export const testUrl = (link) => {
 	});
 };
 
+//execute the wget mirror command to duplicate the website for running locally
 export const makeTemplate = (link) => {
 	return new Promise((resolve,reject) => {
 		var cwd  = process.cwd();
@@ -57,7 +60,7 @@ export const makeTemplate = (link) => {
 	});
 };
 
-
+//list contents of a directory
 export const listContents = (directory) => {
 	console.log(directory);
 	return new Promise((resolve,reject)=> {

@@ -29,7 +29,7 @@ getUrl()
 	.then( data 	=> findImages(`${__dirname}/Templates/${host}`))
 	.then( data 	=> data.split('\n'))
 	.then( data 	=> {
-		console.log(data);
+		
 		process.exit(0);
 	})
 	.catch( (err) 	=> {
