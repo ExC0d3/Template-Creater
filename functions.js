@@ -2,7 +2,6 @@ import rl from './input';
 
 var child_process 	= require('child_process');
 const vu 			= require('valid-url');
-var progress 		= require('progressbar').create().step('Downloading Mirror Website');
 const fs 			= require('fs');
 
 export const getUrl = () => {
@@ -33,16 +32,16 @@ export const makeTemplate = (link) => {
 	return new Promise((resolve,reject) => {
 		var cwd  = process.cwd();
 		var wget = child_process.spawn('wget',['--mirror','-p','--convert-links','-P',cwd+'/Templates',link]);
+		var progress 		= require('progressbar').create().step('Downloading Mirror Website');
+
 		
-		
-		progress.setTotal(100);
+		progress.setTotal(50);
 
 		wget.stdout.on('data',(data) => {
 			console.log('Wget Data',data);
 		});
 
 		wget.stderr.on('data', (data) => {
-			progress.addTick();
 			progress.setTick(data.length);
 		});
 
@@ -72,3 +71,27 @@ export const listContents = (directory) => {
 		});
 	});
 };
+
+export const findImages = (directory,format) => {
+	return new Promise((resolve,reject)=> {
+
+	let array = directory.split(' ');
+		let newPath=array[0];
+		let count=1;
+		while(count<=array.length-1){
+			newPath += '\\ '+array[count];
+			count += 1;
+		}
+		console.log('New Path:', newPath );
+
+
+	child_process.exec(`find ${newPath} -name \"*.${format}\"`,(err,stdout,stderr) => {
+		if(err){
+			reject(err);
+		}	else {
+			console.log('Error from find command:',stderr);
+			resolve(stdout);
+		}
+	});
+});
+}

@@ -3,6 +3,7 @@ import {
 	testUrl,
 	makeTemplate,
 	listContents,
+	findImages,
 } from './functions';
 
 const fs     = require('fs');
@@ -35,4 +36,3 @@ getUrl()
 		console.log(err);
 		process.exit(1);
 	});
-
