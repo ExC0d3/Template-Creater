@@ -97,3 +97,14 @@ export const findImages = (directory,format) => {
 	});
 });
 }
+
+export const mkdir = (path,name) => {
+	return new Promise((resolve,reject) => {
+		const finalPath = path+'/'+name;
+		fs.mkdir(finalPath, (err,result) => {
+			if(err)
+				reject(err);
+			resolve(result);
+		});
+	});
+}

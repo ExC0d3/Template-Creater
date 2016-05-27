@@ -4,6 +4,7 @@ import {
 	makeTemplate,
 	listContents,
 	findImages,
+	mkdir,
 } from './functions';
 
 const fs     = require('fs');
@@ -18,7 +19,7 @@ const check = (value)=>{
 	return fs.lstatSync(`${cwd}/Templates/${host}/${value}`).isDirectory();
 };
 
-
+/*
 getUrl()
 	.then( url 		=> testUrl(url))
 	.then( url 		=> makeTemplate(url))
@@ -37,3 +38,4 @@ getUrl()
 		console.log(err);
 		process.exit(1);
 	});
+*/
