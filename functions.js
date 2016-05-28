@@ -113,8 +113,11 @@ export const mkdir = (path,name) => {
 	});
 }
 
-//fetches placeholders and places them in the "test" folder
-
+/*
+	fetches placeholders and places them in the "test" folder
+	also attaches "holder" property to the img object
+	which has the absolute path to the place holder
+*/
 export const getHolder = (imgSet) => {
 
 	var picCount = imgSet.length;//this keeps tracks of how many pictures we have
@@ -139,14 +142,42 @@ export const getHolder = (imgSet) => {
 				request(link).pipe(fs.createWriteStream(`${__dirname}/Templates/test/${fileName}`))
 				.on('close',()=>{
 					console.log('Completed with',fileName);
-
+					img['holder'] = `${__dirname}/Templates/test/${fileName}`;
 					picCount -= 1;//decrease the count since we have got placeholder for 1 image
 					if(picCount === 0){
 						//condition is satisfied means that all the placeholders have been fetched
-						resolve(true);
+						resolve(imgSet);
 					}					
 				});
 			});
 		});		
 	});
 };
+
+/*
+	function to replace one file with another
+	file1 and file2 are absolute paths
+*/
+export const replace = (file1, file2) => {
+	return new Promise((resolve,reject) => {
+		//first delte the original image
+		//then start copying the placeholder
+		fs.unlink(file1,()=>{
+			fs.createReadStream(file2).pipe(fs.createWriteStream(file1))
+			.on('close',()=>{
+			resolve('Completed');
+		});	
+		});
+	});
+};
+
+/*
+	dummy function resolves anything that is passed to it, only for testing 
+	purposes
+*/
+
+export const dummy = (value) => {
+	return new Promise((resolve,reject) => {
+		resolve(value);
+	});
+}

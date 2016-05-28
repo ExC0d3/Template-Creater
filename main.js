@@ -1,13 +1,15 @@
 'use strict';
 
 import {
-	getUrl,
-	testUrl,
 	makeTemplate,
 	listContents,
 	findImages,
-	mkdir,
 	getHolder,
+	testUrl,
+	replace,
+	getUrl,
+	mkdir,
+	dummy,
 } from './functions';
 
 const fs     	= require('fs');
@@ -65,8 +67,16 @@ getUrl()
 		return set;
 	})
 	.then( imgSet => getHolder(imgSet))
-	.then( data => {
-		console.log(data);
+	.then( imgSet => {
+		var promises = [];
+		imgSet.forEach((img) => {
+			promises.push(replace(img.path,img.holder));
+		})
+		return promises;
+	})
+	.then(data => Promise.all(data))
+	.then(data => {
+		console.log('Yippepepe Yaya, your template is ready ! Enjoy');
 		process.exit(0);
 	})
 	.catch( (err) 	=> {
@@ -74,4 +84,5 @@ getUrl()
 		console.log(err);
 		process.exit(1);
 	});
+
 

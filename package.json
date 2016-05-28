@@ -4,7 +4,8 @@
   "description": "Creates the folder structure HTML/CSS/JS and replaces images with placeholders ",
   "main": "index.js",
   "scripts": {
-    "start": "mkdir -p Templates &&  rm -rf Templates/test/* &&  node index.js"
+    "start": "mkdir -p Templates &&  rm -rf Templates/test/* &&  node index.js",
+    "test":"node index.js"
   },
   "repository": {
     "type": "git",
