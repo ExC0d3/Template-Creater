@@ -1,6 +1,9 @@
+'use strict';
+
 import rl from './input';
 
 var child_process 	= require('child_process');
+const request		= require('request');
 const vu 			= require('valid-url');
 const fs 			= require('fs');
 
@@ -102,10 +105,48 @@ export const mkdir = (path,name) => {
 	return new Promise((resolve,reject) => {
 		const finalPath = path+'/'+name;
 		fs.mkdir(finalPath, (err,result) => {
-			if(err.code !== 'EEXIST')
+			if(err !== null && err.code !== 'EEXIST')
 				reject(err);
 			console.log('directory created successfully');
 			resolve(result);
 		});
 	});
 }
+
+//fetches placeholders and places them in the "test" folder
+
+export const getHolder = (imgSet) => {
+
+	var picCount = imgSet.length;//this keeps tracks of how many pictures we have
+
+	return new Promise((resolve,reject) => {
+		
+		imgSet.forEach((img,index) => {
+		
+		const temp 		= img.path.split('/');
+		const fileName 	= temp[temp.length-1];
+		const link 		= `http://placehold.it/${img.w}x${img.h}.${img.ext}`;
+		
+		console.log('Fetching placeholder for',fileName);
+			
+			request.head(link,(err,res,body) => {
+				if(err){
+					reject(err);
+				}
+				// console.log('Content-type',res.headers['content-type']);
+				// console.log('Conetent-length',res.headers['content-length']);
+
+				request(link).pipe(fs.createWriteStream(`${__dirname}/Templates/test/${fileName}`))
+				.on('close',()=>{
+					console.log('Completed with',fileName);
+
+					picCount -= 1;//decrease the count since we have got placeholder for 1 image
+					if(picCount === 0){
+						//condition is satisfied means that all the placeholders have been fetched
+						resolve(true);
+					}					
+				});
+			});
+		});		
+	});
+};

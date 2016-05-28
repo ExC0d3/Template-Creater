@@ -1,3 +1,5 @@
+'use strict';
+
 import {
 	getUrl,
 	testUrl,
@@ -5,6 +7,7 @@ import {
 	listContents,
 	findImages,
 	mkdir,
+	getHolder,
 } from './functions';
 
 const fs     	= require('fs');
@@ -12,7 +15,7 @@ const url    	= require('url');
 const fileType	= require('file-type');
 const imgsize 	= require('image-size');
 const filter 	= require('array-promise-filter');
-
+const request	= require('request');
 //helpful values
 var cwd = process.cwd();
 var host;
@@ -41,10 +44,9 @@ getUrl()
 		return data;
 	})
 	.then( images 	=> {
-		const base = 'http://placehold.it';
+		const set = [];
 		console.log('Total Images: ',images.length);
 		images.forEach((image) => {
-		console.log('Parsing Image',image);
 		const dimensions 	= imgsize(image);//get dimensions of the image
 		const width  		= dimensions.width;//width of image
 		const height 		= dimensions.height;//height of image
@@ -58,10 +60,13 @@ getUrl()
 			h:height,
 			ext:ext
 		};
-
-		console.log(imgProps);
+		set.push(imgProps);
 	});
-		
+		return set;
+	})
+	.then( imgSet => getHolder(imgSet))
+	.then( data => {
+		console.log(data);
 		process.exit(0);
 	})
 	.catch( (err) 	=> {
@@ -69,3 +74,4 @@ getUrl()
 		console.log(err);
 		process.exit(1);
 	});
+
