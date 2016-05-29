@@ -84,5 +84,3 @@ getUrl()
 		console.log(err);
 		process.exit(1);
 	});
-
-

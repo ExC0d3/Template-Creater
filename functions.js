@@ -90,7 +90,7 @@ export const findImages = (directory,format) => {
 			count += 1;
 		}
 
-	child_process.exec(`find ${newPath} -name \"*.jpg\" -or -name \"*.png\"`,(err,stdout,stderr) => {
+	child_process.exec(`find ${newPath} -name \"*.jpg\" -or -name \"*.png\" -or -name \"*.JPG\"`,(err,stdout,stderr) => {
 		if(err){
 			reject(err);
 		}	else {

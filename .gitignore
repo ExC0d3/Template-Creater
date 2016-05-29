@@ -34,3 +34,9 @@ node_modules
 
 # Ignore template Directory
 Templates
+
+# Error Records
+errors.txt
+
+# Test Files
+test.txt
