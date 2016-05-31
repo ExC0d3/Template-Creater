@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "mkdir -p Templates &&  rm -rf Templates/test/* &&  node index.js",
-    "test":"node index.js"
+    "test":"node test.js"
   },
   "repository": {
     "type": "git",
