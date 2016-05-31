@@ -139,16 +139,31 @@ export const getHolder = (imgSet) => {
 				// console.log('Content-type',res.headers['content-type']);
 				// console.log('Conetent-length',res.headers['content-length']);
 
-				request(link).pipe(fs.createWriteStream(`${__dirname}/Templates/test/${fileName}`))
-				.on('close',()=>{
+				//check if file exists, if it does not then start piping otherwise skip
+				const path = `${__dirname}/Templates/test/${fileName}`;
+				try{
+					fs.access(path,fs.F_OK);
+					console.log('Skipping ',fileName);
+				}catch(err){
+					try{
+						request(link).pipe(fs.createWriteStream(`${__dirname}/Templates/test/${fileName}`))
+					.on('error',(err)=>{
+					console.log('Error in piping',err);
+					})
+					.on('close',()=>{
 					console.log('Completed with',fileName);
 					img['holder'] = `${__dirname}/Templates/test/${fileName}`;
 					picCount -= 1;//decrease the count since we have got placeholder for 1 image
 					if(picCount === 0){
 						//condition is satisfied means that all the placeholders have been fetched
 						resolve(imgSet);
-					}					
-				});
+						}					
+					});
+				} catch(err) {
+					console.log('Error in piping',err);
+				}			
+			}
+
 			});
 		});		
 	});

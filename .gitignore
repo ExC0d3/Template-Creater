@@ -40,3 +40,9 @@ errors.txt
 
 # Test Files
 test.txt
+
+# Backup folder
+backup
+
+# Local Test script
+test.js

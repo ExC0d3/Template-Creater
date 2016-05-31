@@ -17,7 +17,7 @@ const url    	= require('url');
 const fileType	= require('file-type');
 const imgsize 	= require('image-size');
 const filter 	= require('array-promise-filter');
-const request	= require('request');
+
 //helpful values
 var cwd = process.cwd();
 var host;
@@ -84,3 +84,4 @@ getUrl()
 		console.log(err);
 		process.exit(1);
 	});
+
