@@ -6,8 +6,8 @@
   "scripts": {
     "start": "mkdir -p Templates &&  rm -rf Templates/test/* &&  node index.js",
     "test":"node ./Test\\ Script/index.js",
-    "debug-test":"node-debug -p 8181 ./Test\\ Script/index.js",
-    "debug":"node-debug -p 8181 index.js"
+    "debug-test":"node --debug-brk ./Test\\ Script/index.js",
+    "debug":"node --debug-brk  index.js"
   },
   "repository": {
     "type": "git",
